@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Star Rating</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <div class="text">Thanks for rating us!</div>
+        <div class="edit">EDIT</div>
+      </div>
+      <div class="star-widget">
+        <input type="radio" name="rate" id="rate-5">
+        <label for="rate-5" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-4">
+        <label for="rate-4" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-3">
+        <label for="rate-3" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-2">
+        <label for="rate-2" class="fas fa-star"></label>
+        <input type="radio" name="rate" id="rate-1">
+        <label for="rate-1" class="fas fa-star"></label>
+        <form action="#">
+          <header></header>
+          <div class="textarea">
+            <textarea cols="30" placeholder="Describe your experience.." id="comment-input"></textarea>
+          </div>
+          <div class="btn">
+            <button type="submit">Post</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAUoAcUSnOxUJK_RvQZpXIEUimyGOULg9o",
+        authDomain: "nps-jsi09-9b9fe.firebaseapp.com",
+        databaseURL: "https://nps-jsi09-9b9fe-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "nps-jsi09-9b9fe",
+        storageBucket: "nps-jsi09-9b9fe.appspot.com",
+        messagingSenderId: "341512619162",
+        appId: "1:341512619162:web:ed8645d7eff740116b4b23",
+        measurementId: "G-3K8YDGFWPD"
+      };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    const btn = document.querySelector("button");
+      const post = document.querySelector(".post");
+      const widget = document.querySelector(".star-widget");
+      const editBtn = document.querySelector(".edit");
+      btn.onclick = ()=>{
+        widget.style.display = "none";
+        post.style.display = "block";
+        editBtn.onclick = ()=>{
+          widget.style.display = "block";
+          post.style.display = "none";
+        } 
+        return false;
+      }
+
+
+      const cmtBtn = document.querySelector(".btn");
+      
+      let today = new Date()
+      let time = today.getDate() + '-' + today.getMonth() + '-' + today.getFullYear() + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+            cmtBtn.addEventListener("click", () => {
+              let bienmoi = document.querySelector('#comment-input')
+              let userId = sessionStorage.getItem('userId')
+                const db = getDatabase();
+                set(ref(db, 'users/' + userId + '/comments/'+time), {
+                    comment: bienmoi.value,
+                    time: time
+                });
+            })
+</script>
+  </body>
+</html>
