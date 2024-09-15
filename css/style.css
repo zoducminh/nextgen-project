@@ -25474,3 +25474,9 @@ button:hover{
 	top: 1880px;
 	right: 0px;
 }
+
+.tourDANbtn{
+	height: 50px;
+	width: 150px;
+	color: red;
+}
